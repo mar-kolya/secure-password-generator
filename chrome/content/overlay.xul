@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://passwordgenerator/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://passwordgenerator/locale/overlay.dtd">
+<overlay id="passwordGeneratorOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+
+  <menupopup id="menu_ToolsPopup">
+    <menuitem id="passwordGenerator-menu" label="&passwordGenerator.menu.label;"
+              oncommand="passwordGenerator.onGeneratePasswordCommand(event);"/>
+  </menupopup>
+
+  <popup id="contentAreaContextMenu">
+    <menuseparator id="passwordGenerator-context-separator" insertafter="context-selectall"/>
+    <menuitem id="passwordGenerator-context-generate"
+              label="&passwordGenerator.context.generate.label;"
+              oncommand="passwordGenerator.onGeneratePasswordContextCommand(event);"/>
+    <menuitem id="passwordGenerator-context-insertLast"
+              label="&passwordGenerator.context.insertLast.label;"
+              oncommand="passwordGenerator.onInsertLastPasswordCommand(event);"/>
+  </popup>
+</overlay>

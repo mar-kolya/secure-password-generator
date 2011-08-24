@@ -1,0 +1,3 @@
+<!ENTITY passwordGenerator.menu.label "Secure password generator">
+<!ENTITY passwordGenerator.context.generate.label "Generate password">
+<!ENTITY passwordGenerator.context.insertLast.label "Insert previous password">
