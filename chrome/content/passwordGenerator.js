@@ -111,7 +111,7 @@ var passwordGenerator = {
             alpha:     "abcdefghijklmnopqrstuvwxyz",
             vowel:     "aeiou",
             consonant: "bcdfghjklmnpqrstvwxyz",
-            digits:   "1234567890",
+            digits:    "1234567890",
             left:      /[^abcdefgqrstvwxz123456\`\~\!\@\#\$\%\^]/gi,
             right:     /[^hijklmnopuy7890&*()\-\_\=\+\{\}\|\[\]\:\"\;\'\<\>\?\,\.\/]/gi
         };
@@ -177,6 +177,15 @@ var passwordGenerator = {
                              prefs.getIntPref("characters.other.weight") + 1);
         }
 
+        function randomSort(a, b) {
+            var temp = Math.round(Math.random()*10);
+            return (temp % 2) * (temp > 5 ? 1 : -1);
+        }
+
+//        valid_chars = valid_chars.join('');
+//        valid_chars = valid_chars.split('').sort(randomSort).join('');
+        valid_chars = valid_chars.sort(randomSort);
+
         var passwordField = this.passwordField;
         var passwordLength = prefs.getIntPref("length");
         var password = "";
@@ -185,6 +194,7 @@ var passwordGenerator = {
         (function nextChar() {
              var line = valid_chars[Math.round(Math.random() * (valid_chars.length - 1))];
              var newChar = line[Math.round(Math.random() * (line.length - 1))];
+//             var newChar = valid_chars[Math.round(Math.random() * (valid_chars.length - 1))];
 
              passwordField.value = password + newChar;
 

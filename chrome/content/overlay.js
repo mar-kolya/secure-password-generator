@@ -1,4 +1,7 @@
 var passwordGenerator = {
+
+    generatorParams: {},
+
     onBrowserLoad: function() {
         document.getElementById("contentAreaContextMenu")
             .addEventListener("popupshowing", function (event) {
@@ -13,9 +16,7 @@ var passwordGenerator = {
 
     onGeneratePasswordContextCommand: function(event) {
         var input = document.popupNode;
-        var htmlDocument = input.ownerDocument;
-        if(!htmlDocument.passwordGenerator) htmlDocument.passwordGenerator = {};
-        var params = htmlDocument.passwordGenerator;
+        var params = this.generatorParams;
         params.input = input;
         window.openDialog('chrome://passwordgenerator/content/passwordGenerator.xul',
                           'passwordGenerator', 'centerscreen, chrome', params).focus();
@@ -23,9 +24,8 @@ var passwordGenerator = {
 
     onInsertLastPasswordCommand: function(event) {
         var input = document.popupNode;
-        var htmlDocument = input.ownerDocument;
-        var params = htmlDocument.passwordGenerator;
-        if(params && params.lastPassword) input.value = params.lastPassword;
+        var params = this.generatorParams;
+        if(params.lastPassword) input.value = params.lastPassword;
     },
 
     /*onToolbarButtonCommand: function(event) {
@@ -41,9 +41,9 @@ var passwordGenerator = {
         if(hidden) {
             document.getElementById("passwordGenerator-context-insertLast").hidden = hidden;
         } else {
-            var params = triggerNode.ownerDocument.passwordGenerator;
+            var params = this.generatorParams;
             document.getElementById("passwordGenerator-context-insertLast").hidden
-                = !(params && params.lastPassword);
+                = !params.lastPassword;
         }
     }
 };

@@ -12,9 +12,11 @@
   <popup id="contentAreaContextMenu">
     <menuseparator id="passwordGenerator-context-separator" insertafter="context-selectall"/>
     <menuitem id="passwordGenerator-context-generate"
+              insertafter="passwordGenerator-context-separator"
               label="&passwordGenerator.context.generate.label;"
               oncommand="passwordGenerator.onGeneratePasswordContextCommand(event);"/>
     <menuitem id="passwordGenerator-context-insertLast"
+              insertafter="passwordGenerator-context-generate"
               label="&passwordGenerator.context.insertLast.label;"
               oncommand="passwordGenerator.onInsertLastPasswordCommand(event);"/>
   </popup>
