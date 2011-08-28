@@ -13,7 +13,6 @@ var passwordGenerator = {
         document.getElementById("password").type = prefs.getBoolPref("hidePassword") ? "password" : "";
         document.getElementById("passwordLength").value = prefs.getIntPref("length");
         document.getElementById("hands").value = prefs.getIntPref("hands");
-        document.getElementById("mnemonic").checked = prefs.getBoolPref("mnemonic");
 
         document.getElementById("useDigits").checked = prefs.getBoolPref("characters.digits");
         document.getElementById("digitsWeight").setAttribute("curpos",
@@ -38,7 +37,6 @@ var passwordGenerator = {
         prefs.setBoolPref("hidePassword", document.getElementById("hidePassword").checked);
         prefs.setIntPref("length", document.getElementById("passwordLength").value);
         prefs.setIntPref("hands", document.getElementById("hands").value);
-        prefs.setBoolPref("mnemonic", document.getElementById("mnemonic").checked);
 
         prefs.setBoolPref("characters.digits", document.getElementById("useDigits").checked);
         prefs.setIntPref("characters.digits.weight", document.getElementById("digitsWeight").getAttribute("curpos"));
@@ -119,8 +117,6 @@ var passwordGenerator = {
         this.savePrefs();
         var prefs = this.getPrefs();
 
-        var mnemonic = prefs.getBoolPref("mnemonic");
-
         var valid_hand_chars;
 	switch(prefs.getIntPref("hands")) {
 	case 0:
@@ -152,12 +148,12 @@ var passwordGenerator = {
             }
         }
 
-        if(!mnemonic && prefs.getBoolPref("characters.digits")) {
+        if(prefs.getBoolPref("characters.digits")) {
             push_valid_chars(character_groups.digits,
                              prefs.getIntPref("characters.digits.weight") + 1);
         }
 
-        if(mnemonic || prefs.getBoolPref("characters.alpha")) {
+        if(prefs.getBoolPref("characters.alpha")) {
             var chars = character_groups.alpha;
             switch(prefs.getIntPref("characters.alpha.case")) {
 	    case 0:
@@ -172,7 +168,7 @@ var passwordGenerator = {
             push_valid_chars(chars, prefs.getIntPref("characters.alpha.weight") + 1);
         }
 
-        if(!mnemonic && prefs.getBoolPref("characters.other")) {
+        if(prefs.getBoolPref("characters.other")) {
             push_valid_chars(prefs.getCharPref("characters.other.chars"),
                              prefs.getIntPref("characters.other.weight") + 1);
         }
@@ -189,7 +185,6 @@ var passwordGenerator = {
         var passwordField = this.passwordField;
         var passwordLength = prefs.getIntPref("length");
         var password = "";
-        var skipped  = 0;
 
         (function nextChar() {
              var line = valid_chars[Math.round(Math.random() * (valid_chars.length - 1))];
@@ -197,42 +192,11 @@ var passwordGenerator = {
 //             var newChar = valid_chars[Math.round(Math.random() * (valid_chars.length - 1))];
 
              passwordField.value = password + newChar;
-
-             var skipping = false;
-             if(mnemonic) {
-                 var lowerCaseNewChar = newChar.toLowerCase();
-                 var lowerCasePrevChar = password.length
-                     ? password[password.length - 1].toLowerCase()
-                     : null;
-                 var lowerCasePrevPrevChar = password.length > 1
-                     ? password[password.length - 2].toLowerCase()
-                     : null;
-                 if(lowerCasePrevChar && lowerCasePrevPrevChar) {
-                     //make sure that there is one vowel every 2 consonants
-                     if(character_groups.vowel.indexOf(lowerCaseNewChar) < 0
-                        && character_groups.vowel.indexOf(lowerCasePrevChar) < 0
-                        && character_groups.vowel.indexOf(lowerCasePrevPrevChar) < 0) {
-                         skipping = true;
-                     }
-                     //make sure that there is no more than 2 vowels together
-                     if(character_groups.consonant.indexOf(lowerCaseNewChar) > -1
-                        && character_groups.consonant.indexOf(lowerCasePrevChar) > -1
-                        && character_groups.consonant.indexOf(lowerCasePrevPrevChar) > -1) {
-                         skipping = true;
-                     }
-                 }
-             }
-
-             if(skipping && skipped <= maxSkippedFactor * passwordLength) {
-                 skipped++;
-                 window.setTimeout(nextChar, delay);
+             password += newChar;
+             if(password.length >= passwordLength) {
+                 passwordField.value = password;
              } else {
-                 password += newChar;
-                 if(password.length >= passwordLength) {
-                     passwordField.value = password;
-                 } else {
-                     window.setTimeout(nextChar, delay);
-                 }
+                 window.setTimeout(nextChar, delay);
              }
         })();
     }

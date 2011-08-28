@@ -10,5 +10,4 @@ pref("extensions.passwordgenerator.characters.other.chars", "$!@_%^*&()");
 pref("extensions.passwordgenerator.characters.other.weight", 4);
 pref("extensions.passwordgenerator.characters.exclude", true);
 pref("extensions.passwordgenerator.characters.exclude.chars", "o0");
-pref("extensions.passwordgenerator.mnemonic", false);
 pref("extensions.passwordgenerator.hands", 0);
