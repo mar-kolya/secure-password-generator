@@ -1,4 +1,15 @@
 var passwordGenerator = {
+
+    characterDelay: 20,
+    characterGroups: {
+        alpha:     "abcdefghijklmnopqrstuvwxyz",
+        vowel:     "aeiou",
+        consonant: "bcdfghjklmnpqrstvwxyz",
+        digits:    "1234567890",
+        left:      /[^abcdefgqrstvwxz123456\`\~\!\@\#\$\%\^]/gi,
+        right:     /[^hijklmnopuy7890&*()\-\_\=\+\{\}\|\[\]\:\"\;\'\<\>\?\,\.\/]/gi
+    },
+
     getPrefs: function() {
         if(!this._prefs) {
             this._prefs = Components.classes["@mozilla.org/preferences-service;1"]
@@ -15,18 +26,15 @@ var passwordGenerator = {
         document.getElementById("hands").value = prefs.getIntPref("hands");
 
         document.getElementById("useDigits").checked = prefs.getBoolPref("characters.digits");
-        document.getElementById("digitsWeight").setAttribute("curpos",
-                                                              prefs.getIntPref("characters.digits.weight"));
+        document.getElementById("minDigitsCount").value = prefs.getIntPref("characters.digits.minCount");
 
         document.getElementById("useAlpha").checked = prefs.getBoolPref("characters.alpha");
         document.getElementById("alphaCase").value = prefs.getIntPref("characters.alpha.case");
-        document.getElementById("alphaWeight").setAttribute("curpos",
-                                                            prefs.getIntPref("characters.alpha.weight"));
+        document.getElementById("minAlphaCount").value = prefs.getIntPref("characters.alpha.minCount");
 
         document.getElementById("useOther").checked = prefs.getBoolPref("characters.other");
         document.getElementById("otherChars").value = prefs.getCharPref("characters.other.chars");
-        document.getElementById("otherWeight").setAttribute("curpos",
-                                                            prefs.getIntPref("characters.other.weight"));
+        document.getElementById("minOtherCount").value = prefs.getIntPref("characters.other.minCount");
 
         document.getElementById("exclude").checked = prefs.getBoolPref("characters.exclude");
         document.getElementById("excludeChars").value = prefs.getCharPref("characters.exclude.chars");
@@ -39,15 +47,15 @@ var passwordGenerator = {
         prefs.setIntPref("hands", document.getElementById("hands").value);
 
         prefs.setBoolPref("characters.digits", document.getElementById("useDigits").checked);
-        prefs.setIntPref("characters.digits.weight", document.getElementById("digitsWeight").getAttribute("curpos"));
+        prefs.setIntPref("characters.digits.minCount", document.getElementById("minDigitsCount").value);
 
         prefs.setBoolPref("characters.alpha", document.getElementById("useAlpha").checked);
         prefs.setIntPref("characters.alpha.case", document.getElementById("alphaCase").value);
-        prefs.setIntPref("characters.alpha.weight", document.getElementById("alphaWeight").getAttribute("curpos"));
+        prefs.setIntPref("characters.alpha.minCount", document.getElementById("minAlphaCount").value);
 
         prefs.setBoolPref("characters.other", document.getElementById("useOther").checked);
         prefs.setCharPref("characters.other.chars", document.getElementById("otherChars").value);
-        prefs.setIntPref("characters.other.weight", document.getElementById("otherWeight").getAttribute("curpos"));
+        prefs.setIntPref("characters.other.minCount", document.getElementById("minOtherCount").value);
 
         prefs.setBoolPref("characters.exclude", document.getElementById("exclude").checked);
         prefs.setCharPref("characters.exclude.chars", document.getElementById("excludeChars").value);
@@ -103,58 +111,52 @@ var passwordGenerator = {
     },
 
     createPassword: function(event) {
-        var delay = 20;
-        var maxSkippedFactor = 5;
-        var character_groups = {
-            alpha:     "abcdefghijklmnopqrstuvwxyz",
-            vowel:     "aeiou",
-            consonant: "bcdfghjklmnpqrstvwxyz",
-            digits:    "1234567890",
-            left:      /[^abcdefgqrstvwxz123456\`\~\!\@\#\$\%\^]/gi,
-            right:     /[^hijklmnopuy7890&*()\-\_\=\+\{\}\|\[\]\:\"\;\'\<\>\?\,\.\/]/gi
-        };
-
         this.savePrefs();
         var prefs = this.getPrefs();
 
-        var valid_hand_chars;
+        var validHandChars;
 	switch(prefs.getIntPref("hands")) {
 	case 0:
 	    break;
 	case 1:
-	    valid_hand_chars = character_groups["left"];
+	    validHandChars = this.characterGroups["left"];
 	    break;
 	case 2:
-	    valid_hand_chars = character_groups["right"];
+	    validHandChars = this.characterGroups["right"];
 	    break;
 	}
 
-        var exclude_chars;
+        var excludeChars;
         if(prefs.getBoolPref("characters.exclude")) {
-            exclude_chars = prefs.getCharPref("characters.exclude.chars");
-            if(exclude_chars) {
-                var exclude_regexp = "["
-                    + exclude_chars.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + "]";
-                exclude_chars = new RegExp(exclude_regexp, "gi");
+            excludeChars = prefs.getCharPref("characters.exclude.chars");
+            if(excludeChars) {
+                var excludeRegexp = "["
+                    + excludeChars.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + "]";
+                excludeChars = new RegExp(excludeRegexp, "gi");
             }
         }
 
-        var valid_chars = [];
-        function push_valid_chars(chars, count) {
-            if(valid_hand_chars) chars = chars.replace(valid_hand_chars, "");
-            if(exclude_chars) chars = chars.replace(exclude_chars, "");
-            for(var i = 0; i < count; i ++) {
-                valid_chars.push(chars);
-            }
+        function validChars(chars) {
+            if(validHandChars) chars = chars.replace(validHandChars, "");
+            if(excludeChars) chars = chars.replace(excludeChars, "");
+            return chars;
         }
+
+        var allValidChars = "";
+        var validDigits = "";
+        var validAlpha = "";
+        var validOther = "";
 
         if(prefs.getBoolPref("characters.digits")) {
-            push_valid_chars(character_groups.digits,
-                             prefs.getIntPref("characters.digits.weight") + 1);
+            var chars = validChars(this.characterGroups.digits);
+            if(chars) {
+                allValidChars += chars;
+                validDigits = chars;
+            }
         }
 
         if(prefs.getBoolPref("characters.alpha")) {
-            var chars = character_groups.alpha;
+            var chars = this.characterGroups.alpha;
             switch(prefs.getIntPref("characters.alpha.case")) {
 	    case 0:
 	        break;
@@ -165,36 +167,78 @@ var passwordGenerator = {
 	        chars = chars + chars.toUpperCase();
 	        break;
 	    }
-            push_valid_chars(chars, prefs.getIntPref("characters.alpha.weight") + 1);
+            chars = validChars(chars);
+            if(chars) {
+                allValidChars += chars;
+                validAlpha = chars;
+            }
         }
 
         if(prefs.getBoolPref("characters.other")) {
-            push_valid_chars(prefs.getCharPref("characters.other.chars"),
-                             prefs.getIntPref("characters.other.weight") + 1);
+            var chars = validChars(prefs.getCharPref("characters.other.chars"));
+            if(chars) {
+                allValidChars += chars;
+                validOther = chars;
+            }
         }
 
-        function randomSort(a, b) {
-            var temp = Math.round(Math.random()*10);
-            return (temp % 2) * (temp > 5 ? 1 : -1);
+        function shuffle(string) {
+            var array = string.split("");
+            for(var i = (array.length - 1); i >= 1; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = array[i];
+                array[i] = array[j];
+                array[j] = tmp;
+            }
+            return array.join("");
         }
 
-//        valid_chars = valid_chars.join('');
-//        valid_chars = valid_chars.split('').sort(randomSort).join('');
-        valid_chars = valid_chars.sort(randomSort);
+        //shuffle all charcters
+        allValidChars = shuffle(allValidChars);
+        validDigits = shuffle(validDigits);
+        validAlpha = shuffle(validAlpha);
+        validOther = shuffle(validOther);
+
+        var minDigits = prefs.getIntPref("characters.digits.minCount");
+        var minAlpha = prefs.getIntPref("characters.alpha.minCount");
+        var minOther = prefs.getIntPref("characters.other.minCount");
+        var digitsCount = 0;
+        var alphaCount = 0;
+        var otherCount = 0;
 
         var passwordField = this.passwordField;
         var passwordLength = prefs.getIntPref("length");
         var password = "";
 
-        (function nextChar() {
-             var line = valid_chars[Math.round(Math.random() * (valid_chars.length - 1))];
-             var newChar = line[Math.round(Math.random() * (line.length - 1))];
-//             var newChar = valid_chars[Math.round(Math.random() * (valid_chars.length - 1))];
+        var delay = this.characterDelay;
 
+        (function nextChar() {
+             var chars;
+             //Order of filling min number requirement: digits, other, alpha
+             if(digitsCount < minDigits) {
+                 chars = validDigits;
+                 digitsCount++;
+             }
+             else if(otherCount < minOther) {
+                 chars = validOther;
+                 otherCount++;
+             }
+             else if(alphaCount < minAlpha) {
+                 chars = validAlpha;
+                 alphaCount++;
+             }
+             else {
+                 chars = allValidChars;
+             }
+
+             var newChar = chars[Math.floor(Math.random() * chars.length)];
              passwordField.value = password + newChar;
              password += newChar;
              if(password.length >= passwordLength) {
-                 passwordField.value = password;
+                 window.setTimeout(function() {
+                                       //shuffle result
+                                       passwordField.value = shuffle(password);
+                                   }, delay * 4);
              } else {
                  window.setTimeout(nextChar, delay);
              }

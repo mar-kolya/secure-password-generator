@@ -4,7 +4,7 @@
     <em:id>password.generator@kolya.ca</em:id>
     <em:type>2</em:type>
     <em:name>Secure Password Generator</em:name>
-    <em:version>0.2</em:version>
+    <em:version>0.3</em:version>
     <em:creator>Nikolay Martynov</em:creator>
     <em:contributor></em:contributor>
     <em:description>Easy to use add-on to create random secure passwords.</em:description>
