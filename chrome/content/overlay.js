@@ -28,10 +28,6 @@ var passwordGenerator = {
         if(params.lastPassword) input.value = params.lastPassword;
     },
 
-    /*onToolbarButtonCommand: function(event) {
-        passwordgenerator.onMenuItemCommand(event);
-    },*/
-
     showFirefoxContextMenu: function(event) {
         var triggerNode = event.target.triggerNode;
         // show or hide the menuitem based on what the context menu is on
