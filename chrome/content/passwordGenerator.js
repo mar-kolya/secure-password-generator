@@ -199,9 +199,10 @@ var passwordGenerator = {
         validAlpha = shuffle(validAlpha);
         validOther = shuffle(validOther);
 
-        var minDigits = prefs.getIntPref("characters.digits.minCount");
-        var minAlpha = prefs.getIntPref("characters.alpha.minCount");
-        var minOther = prefs.getIntPref("characters.other.minCount");
+        //min should be zero if there are no chars in the group
+        var minDigits = validDigits.length ? prefs.getIntPref("characters.digits.minCount") : 0;
+        var minAlpha = validAlpha.length ? prefs.getIntPref("characters.alpha.minCount") : 0;
+        var minOther = validOther.length ? prefs.getIntPref("characters.other.minCount") : 0;
         var digitsCount = 0;
         var alphaCount = 0;
         var otherCount = 0;
@@ -232,15 +233,19 @@ var passwordGenerator = {
              }
 
              var newChar = chars[Math.floor(Math.random() * chars.length)];
-             passwordField.value = password + newChar;
-             password += newChar;
-             if(password.length >= passwordLength) {
+
+             if(typeof(newChar) !== "undefined") {
+                 passwordField.value = password + newChar;
+                 password += newChar;
+             }
+
+             if(password.length >= passwordLength || typeof(newChar) === "undefined") {
                  window.setTimeout(function() {
                                        //shuffle result
                                        passwordField.value = shuffle(password);
                                    }, delay * 4);
              } else {
-                 window.setTimeout(nextChar, delay);
+                 window.setTimeout(function() { nextChar(); }, delay);
              }
         })();
     }
