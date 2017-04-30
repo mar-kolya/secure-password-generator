@@ -1,0 +1,107 @@
+{
+    "extensionName": {
+	"message": "Secure password generator",
+	"description": "Name of the extension."
+    },
+
+    "extensionDescription": {
+	"message": "Generates random secure passwords.",
+	"description": "Description of the extension."
+    },
+
+    "menuLabelGenerate": {
+	"message": "Generate password",
+	"description": "Label on 'Generate password' menu entry."
+    },
+
+    "menuLabelInsertPrevious": {
+	"message": "Insert previous password",
+	"description": "Label on 'Insert previous password' menu entry."
+    },
+
+    "copyToClipboardButton": {
+	"message": "Copy to clipboard",
+	"description": "Text on a 'Copy to clipboard' button."
+    },
+
+    "hidePassword": {
+	"message": "Hide password",
+	"description": "Tooltip for 'Hide password' image."
+    },
+
+    "showPassword": {
+	"message": "Show password",
+	"description": "Tooltip for 'Show password' image."
+    },
+
+    "passwordLength": {
+	"message": "Password length:",
+	"description": "Text for 'Password length' label."
+    },
+
+    "bothHands": {
+	"message": "Both Hands",
+	"description": "Text for 'Both Hands' menu option."
+    },
+
+    "leftHandOnly": {
+	"message": "Left Hand Only",
+	"description": "Text for 'Left Hand Only' menu option."
+    },
+
+    "rightHand": {
+	"message": "Right Hand Only",
+	"description": "Text for 'Right Hand Only' menu option."
+    },
+
+    "minCharacterCount": {
+	"message": "Min count",
+	"description": "Text for 'Min count' label."
+    },
+
+    "alpha": {
+	"message": "Letters (A-Z)",
+	"description": "Text for 'Letters (A-Z)' label."
+    },
+
+    "lowerCase": {
+	"message": "Lower Case",
+	"description": "Text for 'Lower Case' menu option."
+    },
+
+    "upperCase": {
+	"message": "Upper Case",
+	"description": "Text for 'Upper Case' menu option."
+    },
+
+    "mixedCase": {
+	"message": "Mixed Case",
+	"description": "Text for 'right hand only' menu option."
+    },
+
+    "digits": {
+	"message": "Digits (0-9)",
+	"description": "Text for 'Digits (0-9)' label."
+    },
+
+    "other": {
+	"message": "Other Characters",
+	"description": "Text for 'Other Characters' label."
+    },
+
+    "exclude": {
+	"message": "Exclude Characters",
+	"description": "Text for 'Exclude Characters' label."
+    },
+
+    "excludeDescription": {
+	"message": "(not case sesitive)",
+	"description": "Text for '(not case sesitive)' label."
+    },
+
+    "generatePasswordButton": {
+	"message": "Generate password",
+	"description": "Label on 'Generate password' menu button."
+    }
+
+}

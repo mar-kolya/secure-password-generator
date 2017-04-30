@@ -1,7 +1,0 @@
-content   passwordgenerator                 chrome/content/
-skin      passwordgenerator   classic/1.0   chrome/skin/
-locale    passwordgenerator   en-US         chrome/locale/en-US/
-locale    passwordgenerator   ru-RU         chrome/locale/ru-RU/
-
-
-overlay   chrome://browser/content/browser.xul   chrome://passwordgenerator/content/overlay.xul

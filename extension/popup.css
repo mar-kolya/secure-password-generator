@@ -1,0 +1,67 @@
+
+#copyToClipboardButton {
+    float: right;
+}
+
+input[type=number] {
+    width: 5em;
+}
+
+label, input[type="checkbox"] {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.password-visibility {
+    margin: auto 5px;
+    height: 1em;
+    vertical-align: middle;
+}
+
+.character-settings {
+    display: grid;
+    grid-gap: 5px;
+    align-items: baseline;
+    grid-template-columns: [checkbox] auto [input] auto [count] auto [end];
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.character-settings > .password-length-and-hands {
+    grid-column: checkbox / end;
+}
+
+.character-settings > .password-length-and-hands #hands {
+    float: right;
+}
+
+.character-settings > .count-header {
+    grid-column: count;
+    font-weight: bold;
+    font-size: x-small;
+}
+
+.character-settings > .checkbox {
+    grid-column: checkbox;
+}
+
+.character-settings > .input {
+    grid-column: input;
+}
+
+.character-settings > .input input,
+.character-settings > .input select {
+    width: 10em;
+}
+
+.character-settings > .count {
+    grid-column: count;
+}
+
+.character-settings > .exclude.count {
+    font-size: xx-small;
+}
+
+.create-button {
+    text-align: right;
+}

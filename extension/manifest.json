@@ -1,0 +1,34 @@
+{
+    "manifest_version": 2,
+    "name": "__MSG_extensionName__",
+    "description": "__MSG_extensionDescription__",
+    "version": "1.0",
+    "default_locale": "en",
+    "homepage_url": "https://addons.mozilla.org/firefox/addon/secure-password-generator/",
+    "icons": {
+	"16": "icons/password-16.png",
+	"32": "icons/password-32.png",
+	"48": "icons/password-48.png",
+	"64": "icons/password-64.png"
+    },
+
+    "permissions": [
+	"contextMenus",
+	"activeTab"
+    ],
+
+    "browser_action": {
+	"default_icon": {
+	    "16": "icons/password-16.png",
+	    "32": "icons/password-32.png",
+	    "48": "icons/password-48.png",
+	    "64": "icons/password-64.png"
+	},
+	"default_title": "Secure Password Generator",
+	"default_popup": "popup.html"
+    },
+
+    "background": {
+	"scripts": ["background.js"]
+    }
+}

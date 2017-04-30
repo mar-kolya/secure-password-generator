@@ -1,6 +1,8 @@
-passwordgenerator.xpi
+/extension/dist/*
+/node_modules
 .emacs.desktop*
 TAGS
 *~
 \#*\#
 .\#*
+/secure_password_generator-*.zip

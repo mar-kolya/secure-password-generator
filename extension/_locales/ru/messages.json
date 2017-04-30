@@ -1,0 +1,107 @@
+{
+    "extensionName": {
+	"message": "Генератор безопасных паролей",
+	"description": "Name of the extension."
+    },
+
+    "extensionDescription": {
+	"message": "Создает случайные и безопасные пароли.",
+	"description": "Description of the extension."
+    },
+
+    "menuLabelGenerate": {
+	"message": "Создать пароль",
+	"description": "Label on 'Generate password' menu entry."
+    },
+
+    "menuLabelInsertPrevious": {
+	"message": "Вставить предыдущий пароль",
+	"description": "Label on 'Insert previous password' menu entry."
+    },
+
+    "copyToClipboardButton": {
+	"message": "Скопировать в буфер обмена",
+	"description": "Text on a 'Copy to clipboard' button."
+    },
+
+    "hidePassword": {
+	"message": "Скрыть пароль",
+	"description": "Tooltip for 'Hide password' image."
+    },
+
+    "showPassword": {
+	"message": "Показать пароль",
+	"description": "Tooltip for 'Show password' image."
+    },
+
+    "passwordLength": {
+	"message": "Длинна пароля:",
+	"description": "Text for 'Password length' label."
+    },
+
+    "bothHands": {
+	"message": "Обе руки",
+	"description": "Text for 'Both Hands' menu option."
+    },
+
+    "leftHandOnly": {
+	"message": "Только левая рука",
+	"description": "Text for 'Left Hand Only' menu option."
+    },
+
+    "rightHandOnly": {
+	"message": "Только правая рука",
+	"description": "Text for 'Right Hand Only' menu option."
+    },
+
+    "minCharacterCount": {
+	"message": "Мин. количество",
+	"description": "Text for 'Min count' label."
+    },
+
+    "alpha": {
+	"message": "Буквы (A-Z)",
+	"description": "Text for 'Letters (A-Z)' label."
+    },
+
+    "lowerCase": {
+	"message": "Нижний регистр",
+	"description": "Text for 'Lower Case' menu option."
+    },
+
+    "upperCase": {
+	"message": "Верхний регистр",
+	"description": "Text for 'Upper Case' menu option."
+    },
+
+    "mixedCase": {
+	"message": "Смешанный регистр",
+	"description": "Text for 'right hand only' menu option."
+    },
+
+    "digits": {
+	"message": "Цифры (0-9)",
+	"description": "Text for 'Digits (0-9)' label."
+    },
+
+    "other": {
+	"message": "Спец. символы",
+	"description": "Text for 'Other Characters' label."
+    },
+
+    "exclude": {
+	"message": "Искл. символы",
+	"description": "Text for 'Exclude Characters' label."
+    },
+
+    "excludeDescription": {
+	"message": "(не чувствительно к регистру)",
+	"description": "Text for '(not case sesitive)' label."
+    },
+
+    "generatePasswordButton": {
+	"message": "Создать пароль",
+	"description": "Label on 'Generate password' menu button."
+    }
+
+}
