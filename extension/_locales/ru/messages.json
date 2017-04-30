@@ -11,17 +11,17 @@
 
     "menuLabelGenerate": {
 	"message": "Создать пароль",
-	"description": "Label on 'Generate password' menu entry."
+	"description": "Label on 'Generate Password' menu entry."
     },
 
     "menuLabelInsertPrevious": {
 	"message": "Вставить предыдущий пароль",
-	"description": "Label on 'Insert previous password' menu entry."
+	"description": "Label on 'Insert Previous Password' menu entry."
     },
 
     "copyToClipboardButton": {
 	"message": "Скопировать в буфер обмена",
-	"description": "Text on a 'Copy to clipboard' button."
+	"description": "Text on a 'Copy to Clipboard' button."
     },
 
     "hidePassword": {
@@ -101,7 +101,7 @@
 
     "generatePasswordButton": {
 	"message": "Создать пароль",
-	"description": "Label on 'Generate password' menu button."
+	"description": "Label on 'Generate Password' menu button."
     }
 
 }

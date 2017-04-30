@@ -1,6 +1,6 @@
 {
     "extensionName": {
-	"message": "Secure password generator",
+	"message": "Secure Password Generator",
 	"description": "Name of the extension."
     },
 
@@ -10,18 +10,18 @@
     },
 
     "menuLabelGenerate": {
-	"message": "Generate password",
-	"description": "Label on 'Generate password' menu entry."
+	"message": "Generate Password",
+	"description": "Label on 'Generate Password' menu entry."
     },
 
     "menuLabelInsertPrevious": {
-	"message": "Insert previous password",
-	"description": "Label on 'Insert previous password' menu entry."
+	"message": "Insert Previous Password",
+	"description": "Label on 'Insert Previous Password' menu entry."
     },
 
     "copyToClipboardButton": {
-	"message": "Copy to clipboard",
-	"description": "Text on a 'Copy to clipboard' button."
+	"message": "Copy to Clipboard",
+	"description": "Text on a 'Copy to Clipboard' button."
     },
 
     "hidePassword": {
@@ -100,8 +100,8 @@
     },
 
     "generatePasswordButton": {
-	"message": "Generate password",
-	"description": "Label on 'Generate password' menu button."
+	"message": "Generate Password",
+	"description": "Label on 'Generate Password' menu button."
     }
 
 }
