@@ -72,48 +72,56 @@ class Popup extends React.Component {
     render() {
 	return (
 	    <div>
-		<div>
-		    <input
-			type={this.state.settings.hide ? "password" : "text"}
-			id="password"
-			name="password"
-			value={this.state.password}
-			onChange={this.handleInputChange}
-			ref={(input) => { this.passwordInput = input; }} />
-		    <input
-			type="hidden"
-			id="hide"
-			name="hide"
-			checked={this.state.settings.hide}
-			onChange={this.handleInputChange} />
-		    <img
-			className="password-visibility"
-			src={this.state.settings.hide ? "icons/show.png" : "icons/hide.png"}
-			title={this.state.settings.hide
-			     ? browser.i18n.getMessage("showPassword") : browser.i18n.getMessage("hidePassword")}
-			onClick={this.hideClick} />
-		    <input
-			type="button"
-			id="copyToClipboardButton"
-			value={browser.i18n.getMessage("copyToClipboardButton")}
-			onClick={this.copyToClipboard} />
+		<div className="two-rows-split">
+		    <div>
+			<input
+			    type={this.state.settings.hide ? "password" : "text"}
+			    id="password"
+			    name="password"
+			    value={this.state.password}
+			    onChange={this.handleInputChange}
+			    ref={(input) => { this.passwordInput = input; }} />
+			<input
+			    type="hidden"
+			    id="hide"
+			    name="hide"
+			    checked={this.state.settings.hide}
+			    onChange={this.handleInputChange} />
+			<img
+			    className="password-visibility"
+			    src={this.state.settings.hide ? "icons/show.png" : "icons/hide.png"}
+			    title={this.state.settings.hide
+				 ? browser.i18n.getMessage("showPassword") : browser.i18n.getMessage("hidePassword")}
+			    onClick={this.hideClick} />
+		    </div>
+		    <div>
+			<input
+			    type="button"
+			    id="copyToClipboardButton"
+			    value={browser.i18n.getMessage("copyToClipboardButton")}
+			    onClick={this.copyToClipboard} />
+		    </div>
 		</div>
 
 		<div className="character-settings">
-		    <div className="password-length-and-hands">
-			{browser.i18n.getMessage("passwordLength")} <input
-									type="number"
-									id="length"
-									name="length"
-									min="2"
-									max="99"
-									value={this.state.settings.length}
-									onChange={this.handleInputChange} />
-			<select id="hands" name="hands" value={this.state.settings.hands} onChange={this.handleInputChange}>
-			    <option value={constants.BOTH_HANDS}>{browser.i18n.getMessage("bothHands")}</option>
-			    <option value={constants.LEFT_HAND}>{browser.i18n.getMessage("leftHandOnly")}</option>
-			    <option value={constants.RIGHT_HAND}>{browser.i18n.getMessage("rightHandOnly")}</option>
-			</select>
+		    <div className="password-length-and-hands two-rows-split">
+			<div>
+			    {browser.i18n.getMessage("passwordLength")} <input
+									    type="number"
+									    id="length"
+									    name="length"
+									    min="2"
+									    max="99"
+									    value={this.state.settings.length}
+									    onChange={this.handleInputChange} />
+			</div>
+			<div>
+			    <select id="hands" name="hands" value={this.state.settings.hands} onChange={this.handleInputChange}>
+				<option value={constants.BOTH_HANDS}>{browser.i18n.getMessage("bothHands")}</option>
+				<option value={constants.LEFT_HAND}>{browser.i18n.getMessage("leftHandOnly")}</option>
+				<option value={constants.RIGHT_HAND}>{browser.i18n.getMessage("rightHandOnly")}</option>
+			    </select>
+			</div>
 		    </div>
 
 		    <div className="count-header">{browser.i18n.getMessage("minCharacterCount")}</div>

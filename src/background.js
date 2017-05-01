@@ -130,16 +130,18 @@ function createPassword(settings) {
     return password;
 }
 
+const MENU_CONTEXT = "PASSWORD" in browser.contextMenus.ContextType ? browser.contextMenus.ContextType.PASSWORD : browser.contextMenus.ContextType.EDITABLE;
+
 browser.contextMenus.create({
     id: constants.GENERATE_PASSWORD_MENU,
     title: browser.i18n.getMessage("menuLabelGenerate"),
-    contexts: ["password"]
+    contexts: [MENU_CONTEXT]
 });
 
 browser.contextMenus.create({
     id: constants.INSERT_PREVIOUS_PASSWORD_MENU,
     title: browser.i18n.getMessage("menuLabelInsertPrevious"),
-    contexts: ["password"]
+    contexts: [MENU_CONTEXT]
 });
 
 var password = "";
@@ -159,22 +161,25 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
     }
 });
 
-browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message, sender) => {
+    let response = undefined;
     switch (message.message) {
     case constants.GENERATE_PASSWORD_MESSAGE:
 	password = createPassword(settings);
-	sendResponse({
+	response = {
 	    password: password
-	});
+	};
+	break;
     case constants.GET_STATE_MESSAGE:
-	sendResponse({
+	response = {
 	    password: password,
 	    settings: settings
-	});
+	};
 	break;
     case constants.SET_STATE_MESSAGE:
 	settings = message.settings;
 	password = message.password;
 	break;
     }
+    return response === undefined ? response : Promise.resolve(response);
 });

@@ -1,6 +1,11 @@
+#popup {
+    white-space: nowrap; /* To fix Chrome page size */
+}
 
-#copyToClipboardButton {
-    float: right;
+.two-rows-split {
+    /* We do this hack to avoid doing 'float: right' which is broken in FF: https://bugzilla.mozilla.org/show_bug.cgi?id=488725 */
+    display: flex;
+    justify-content: space-between;
 }
 
 input[type=number] {
@@ -29,10 +34,6 @@ label, input[type="checkbox"] {
 
 .character-settings > .password-length-and-hands {
     grid-column: checkbox / end;
-}
-
-.character-settings > .password-length-and-hands #hands {
-    float: right;
 }
 
 .character-settings > .count-header {
