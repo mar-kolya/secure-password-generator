@@ -29,6 +29,6 @@
     },
 
     "background": {
-	"scripts": ["background.js"]
+	"scripts": ["dist/init.js", "dist/background.js"]
     }
 }

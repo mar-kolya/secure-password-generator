@@ -49,7 +49,7 @@
 	"description": "Text for 'Left Hand Only' menu option."
     },
 
-    "rightHand": {
+    "rightHandOnly": {
 	"message": "Right Hand Only",
 	"description": "Text for 'Right Hand Only' menu option."
     },

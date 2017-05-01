@@ -1,9 +1,9 @@
+import browser from 'webextension-polyfill';
+
+import * as constants from 'constants';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const GENERATE_PASSWORD_MESSAGE = "generate-password";
-const GET_STATE_MESSAGE = "get-state";
-const SET_STATE_MESSAGE = "set-state";
 
 class Popup extends React.Component {
     constructor(props) {
@@ -50,21 +50,21 @@ class Popup extends React.Component {
     }
 
     generatePassword(event) {
-	browser.runtime.sendMessage({message: GENERATE_PASSWORD_MESSAGE}).then((response) => {
+	browser.runtime.sendMessage({message: constants.GENERATE_PASSWORD_MESSAGE}).then((response) => {
 	    this.setState({password: response.password});
 	});
     }
 
     componentDidUpdate() {
 	browser.runtime.sendMessage({
-	    message: SET_STATE_MESSAGE,
+	    message: constants.SET_STATE_MESSAGE,
 	    password: this.state.password,
 	    settings: this.state.settings
 	});
     }
 
     componentDidMount() {
-	browser.runtime.sendMessage({message: GET_STATE_MESSAGE}).then((response) => {
+	browser.runtime.sendMessage({message: constants.GET_STATE_MESSAGE}).then((response) => {
 	    this.setState(response);
 	});
     }
@@ -110,9 +110,9 @@ class Popup extends React.Component {
 									value={this.state.settings.length}
 									onChange={this.handleInputChange} />
 			<select id="hands" name="hands" value={this.state.settings.hands} onChange={this.handleInputChange}>
-			    <option value="both">{browser.i18n.getMessage("bothHands")}</option>
-			    <option value="left">{browser.i18n.getMessage("lefthandOnly")}</option>
-			    <option value="right">{browser.i18n.getMessage("rightHandOnly")}</option>
+			    <option value={constants.BOTH_HANDS}>{browser.i18n.getMessage("bothHands")}</option>
+			    <option value={constants.LEFT_HAND}>{browser.i18n.getMessage("leftHandOnly")}</option>
+			    <option value={constants.RIGHT_HAND}>{browser.i18n.getMessage("rightHandOnly")}</option>
 			</select>
 		    </div>
 
@@ -133,9 +133,9 @@ class Popup extends React.Component {
 			    name="alphaCase"
 			    value={this.state.settings.alphaCase}
 			    onChange={this.handleInputChange}>
-			    <option value="lower">{browser.i18n.getMessage("lowerCase")}</option>
-			    <option value="upper">{browser.i18n.getMessage("upperCase")}</option>
-			    <option value="both">{browser.i18n.getMessage("mixedCase")}</option>
+			    <option value={constants.LOWER_CASE}>{browser.i18n.getMessage("lowerCase")}</option>
+			    <option value={constants.UPPER_CASE}>{browser.i18n.getMessage("upperCase")}</option>
+			    <option value={constants.BOTH_CASES}>{browser.i18n.getMessage("mixedCase")}</option>
 			</select>
 		    </div>
 		    <div className="alpha count">

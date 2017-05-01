@@ -1,45 +1,17 @@
-const characterGroups = {
-    alpha:     "abcdefghijklmnopqrstuvwxyz",
-    vowel:     "aeiou",
-    consonant: "bcdfghjklmnpqrstvwxyz",
-    digits:    "1234567890",
-    left:      /[^abcdefgqrstvwxz123456\`\~\!\@\#\$\%\^]/gi,
-    right:     /[^hijklmnopuy7890&*()\-\_\=\+\{\}\|\[\]\:\"\;\'\<\>\?\,\.\/]/gi
-};
+import browser from 'webextension-polyfill';
 
-const BOTH_CASES = "both";
-const UPPER_CASE = "upper";
-const LOWER_CASE = "lower";
-const BOTH_HANDS = "both";
-const LEFT_HAND = "left";
-const RIGHT_HAND = "right";
-
-const defaultSettings = {
-    hide: false,
-    length: 10,
-    digits: true,
-    digitsMinCount: 2,
-    alpha: true,
-    alphaCase: BOTH_CASES,
-    alphaMinCount: 2,
-    other: true,
-    otherChars: "$!@_%^*&()",
-    otherMinCount: 2,
-    exclude: true,
-    excludeChars: "o0",
-    hands: BOTH_HANDS
-};
+import * as constants from 'constants';
 
 function getValidHandCharsRegex(settings) {
     let validCharsRegex;
     switch (settings.hands) {
-    case BOTH_HANDS:
+    case constants.BOTH_HANDS:
 	break;
-    case LEFT_HAND:
-	validCharsRegex = characterGroups.left;
+    case constants.LEFT_HAND:
+	validCharsRegex = constants.CHARACTER_GROUPS.left;
 	break;
-    case RIGHT_HAND:
-	validCharsRegex = characterGroups.right;
+    case constants.RIGHT_HAND:
+	validCharsRegex = constants.CHARACTER_GROUPS.right;
 	break;
     }
     return validCharsRegex;
@@ -64,19 +36,19 @@ function filterValidChars(chars, validHandCharsRegex, excludeCharsRegex) {
 }
 
 function getDigits(settings) {
-    return settings.digits ? characterGroups.digits : "";
+    return settings.digits ? constants.CHARACTER_GROUPS.digits : "";
 }
 
 function getAlpha(settings) {
     if (settings.alpha) {
-        let chars = characterGroups.alpha;
+        let chars = constants.CHARACTER_GROUPS.alpha;
         switch (settings.alphaCase) {
-	case LOWER_CASE:
+	case constants.LOWER_CASE:
 	    break;
-	case UPPER_CASE:
+	case constants.UPPER_CASE:
 	    chars = chars.toUpperCase();
 	    break;
-	case BOTH_CASES:
+	case constants.BOTH_CASES:
 	    chars = chars + chars.toUpperCase();
 	    break;
 	}
@@ -158,34 +130,26 @@ function createPassword(settings) {
     return password;
 }
 
-
-const GENERATE_PASSWORD_MENU = "generate-password";
-const INSERT_PREVIOUS_PASSWORD_MENU = "insert-previous-password";
-
-const GENERATE_PASSWORD_MESSAGE = "generate-password";
-const GET_STATE_MESSAGE = "get-state";
-const SET_STATE_MESSAGE = "set-state";
-
 browser.contextMenus.create({
-    id: GENERATE_PASSWORD_MENU,
+    id: constants.GENERATE_PASSWORD_MENU,
     title: browser.i18n.getMessage("menuLabelGenerate"),
     contexts: ["password"]
 });
 
 browser.contextMenus.create({
-    id: INSERT_PREVIOUS_PASSWORD_MENU,
+    id: constants.INSERT_PREVIOUS_PASSWORD_MENU,
     title: browser.i18n.getMessage("menuLabelInsertPrevious"),
     contexts: ["password"]
 });
 
 var password = "";
-var settings = JSON.parse(JSON.stringify(defaultSettings));
+var settings = JSON.parse(JSON.stringify(constants.DEFAULT_SETTINGS));
 
 browser.contextMenus.onClicked.addListener(function(info, tab) {
     switch (info.menuItemId) {
-    case GENERATE_PASSWORD_MENU:
+    case constants.GENERATE_PASSWORD_MENU:
 	password = createPassword(settings);
-    case INSERT_PREVIOUS_PASSWORD_MENU:
+    case constants.INSERT_PREVIOUS_PASSWORD_MENU:
         browser.tabs.executeScript({
             code: "document.activeElement.value = " + JSON.stringify(password)
         }).catch(function(error) {
@@ -197,18 +161,18 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.message) {
-    case GENERATE_PASSWORD_MESSAGE:
+    case constants.GENERATE_PASSWORD_MESSAGE:
 	password = createPassword(settings);
 	sendResponse({
 	    password: password
 	});
-    case GET_STATE_MESSAGE:
+    case constants.GET_STATE_MESSAGE:
 	sendResponse({
 	    password: password,
 	    settings: settings
 	});
 	break;
-    case SET_STATE_MESSAGE:
+    case constants.SET_STATE_MESSAGE:
 	settings = message.settings;
 	password = message.password;
 	break;
