@@ -20,11 +20,11 @@ function getValidHandCharsRegex(settings) {
 function getExcludeCharsRegex(settings) {
     let excludeCharsRegex;
     if (settings.exclude) {
-        let excludeChars = settings.excludeChars;
-        if (excludeChars) {
-            let excludeRegexp = "[" + excludeChars.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + "]";
-            excludeCharsRegex = new RegExp(excludeRegexp, "gi");
-        }
+	let excludeChars = settings.excludeChars;
+	if (excludeChars) {
+	    let excludeRegexp = "[" + excludeChars.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + "]";
+	    excludeCharsRegex = new RegExp(excludeRegexp, "gi");
+	}
     }
     return excludeCharsRegex;
 }
@@ -41,8 +41,8 @@ function getDigits(settings) {
 
 function getAlpha(settings) {
     if (settings.alpha) {
-        let chars = constants.CHARACTER_GROUPS.alpha;
-        switch (settings.alphaCase) {
+	let chars = constants.CHARACTER_GROUPS.alpha;
+	switch (settings.alphaCase) {
 	case constants.LOWER_CASE:
 	    break;
 	case constants.UPPER_CASE:
@@ -62,13 +62,19 @@ function getOther(settings) {
     return settings.other ? settings.otherChars : "";
 }
 
+function randomInt(max) {
+    let randomArray = new Uint16Array(1);
+    window.crypto.getRandomValues(randomArray);
+    return randomArray[0] % max;
+}
+
 function shuffle(string) {
     var array = string.split("");
     for (var i = (array.length - 1); i >= 1; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var tmp = array[i];
-        array[i] = array[j];
-        array[j] = tmp;
+	var j = randomInt(i + 1);
+	var tmp = array[i];
+	array[i] = array[j];
+	array[j] = tmp;
     }
     return array.join("");
 }
@@ -99,31 +105,31 @@ function createPassword(settings) {
     let password = "";
 
     while (password.length < settings.length) {
-        let chars;
-        //Order of filling min number requirement: digits, other, alpha
-        if (digitsCount < minDigits) {
-            chars = validDigits;
-            digitsCount++;
-        }
-        else if (otherCount < minOther) {
-            chars = validOther;
-            otherCount++;
-        }
-        else if (alphaCount < minAlpha) {
-            chars = validAlpha;
-            alphaCount++;
-        }
-        else {
-            chars = allValidChars;
-        }
+	let chars;
+	//Order of filling min number requirement: digits, other, alpha
+	if (digitsCount < minDigits) {
+	    chars = validDigits;
+	    digitsCount++;
+	}
+	else if (otherCount < minOther) {
+	    chars = validOther;
+	    otherCount++;
+	}
+	else if (alphaCount < minAlpha) {
+	    chars = validAlpha;
+	    alphaCount++;
+	}
+	else {
+	    chars = allValidChars;
+	}
 
-        let newChar = chars[Math.floor(Math.random() * chars.length)];
+	let newChar = chars[randomInt(chars.length)];
 
 	if (typeof(newChar) === "undefined") {
 	    break;
 	}
 
-        password += newChar;
+	password += newChar;
     }
     password = shuffle(password);
 
@@ -152,10 +158,10 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
     case constants.GENERATE_PASSWORD_MENU:
 	password = createPassword(settings);
     case constants.INSERT_PREVIOUS_PASSWORD_MENU:
-        browser.tabs.executeScript({
-            code: "document.activeElement.value = " + JSON.stringify(password)
-        }).catch(function(error) {
-            console.error("Failed to set password: " + error);
+	browser.tabs.executeScript({
+	    code: "document.activeElement.value = " + JSON.stringify(password)
+	}).catch(function(error) {
+	    console.error("Failed to set password: " + error);
 	});
 	break;
     }
