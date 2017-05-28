@@ -2,6 +2,7 @@
 export const GENERATE_PASSWORD_MESSAGE = "generate-password";
 export const GET_STATE_MESSAGE = "get-state";
 export const SET_STATE_MESSAGE = "set-state";
+export const SAVE_SETTINGS_MESSAGE = "save-settings";
 
 export const GENERATE_PASSWORD_MENU = "generate-password";
 export const INSERT_PREVIOUS_PASSWORD_MENU = "insert-previous-password";
@@ -13,6 +14,7 @@ export const BOTH_HANDS = "both";
 export const LEFT_HAND = "left";
 export const RIGHT_HAND = "right";
 
+export const SETTINGS_KEY = "settings";
 export const DEFAULT_SETTINGS = {
     hide: false,
     length: 10,

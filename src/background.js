@@ -136,7 +136,8 @@ function createPassword(settings) {
     return password;
 }
 
-const MENU_CONTEXT = "PASSWORD" in browser.contextMenus.ContextType ? browser.contextMenus.ContextType.PASSWORD : browser.contextMenus.ContextType.EDITABLE;
+const MENU_CONTEXT = "PASSWORD" in browser.contextMenus.ContextType
+      ? browser.contextMenus.ContextType.PASSWORD : browser.contextMenus.ContextType.EDITABLE;
 
 browser.contextMenus.create({
     id: constants.GENERATE_PASSWORD_MENU,
@@ -153,16 +154,27 @@ browser.contextMenus.create({
 var password = "";
 var settings = JSON.parse(JSON.stringify(constants.DEFAULT_SETTINGS));
 
-browser.contextMenus.onClicked.addListener(function(info, tab) {
+browser.storage.local
+    .get({ [constants.SETTINGS_KEY]: settings })
+    .then(value => {
+	settings = value[constants.SETTINGS_KEY];
+    })
+    .catch(error => {
+	console.error("Cannot read settings: ", error);
+    });
+
+browser.contextMenus.onClicked.addListener((info, tab) => {
     switch (info.menuItemId) {
     case constants.GENERATE_PASSWORD_MENU:
 	password = createPassword(settings);
     case constants.INSERT_PREVIOUS_PASSWORD_MENU:
-	browser.tabs.executeScript({
-	    code: "document.activeElement.value = " + JSON.stringify(password)
-	}).catch(function(error) {
-	    console.error("Failed to set password: " + error);
-	});
+	browser.tabs
+	    .executeScript({
+		code: "document.activeElement.value = " + JSON.stringify(password)
+	    })
+	    .catch((error) => {
+		console.error("Failed to set password: ", error);
+	    });
 	break;
     }
 });
@@ -172,20 +184,24 @@ browser.runtime.onMessage.addListener((message, sender) => {
     switch (message.message) {
     case constants.GENERATE_PASSWORD_MESSAGE:
 	password = createPassword(settings);
-	response = {
+	response = Promise.resolve({
 	    password: password
-	};
+	});
 	break;
     case constants.GET_STATE_MESSAGE:
-	response = {
+	response = Promise.resolve({
 	    password: password,
 	    settings: settings
-	};
+	});
 	break;
     case constants.SET_STATE_MESSAGE:
 	settings = message.settings;
 	password = message.password;
 	break;
+    case constants.SAVE_SETTINGS_MESSAGE:
+	settings = message.settings;
+	response = browser.storage.local.set({ [constants.SETTINGS_KEY]: settings });
+	break;
     }
-    return response === undefined ? response : Promise.resolve(response);
+    return response;
 });

@@ -14,6 +14,7 @@ class Popup extends React.Component {
 	this.hideClick = this.hideClick.bind(this);
 	this.copyToClipboard = this.copyToClipboard.bind(this);
 	this.generatePassword = this.generatePassword.bind(this);
+	this.saveSettings = this.saveSettings.bind(this);
     }
 
     setSetting(name, value) {
@@ -50,23 +51,47 @@ class Popup extends React.Component {
     }
 
     generatePassword(event) {
-	browser.runtime.sendMessage({message: constants.GENERATE_PASSWORD_MESSAGE}).then((response) => {
-	    this.setState({password: response.password});
-	});
+	browser.runtime
+	       .sendMessage({message: constants.GENERATE_PASSWORD_MESSAGE})
+	       .then((response) => {
+		   this.setState({password: response.password});
+	       })
+	       .catch(error => {
+		   console.error("Cannot generate password: ", error);
+	       });
     }
 
+    saveSettings(event) {
+	browser.runtime
+	       .sendMessage({
+		   message: constants.SAVE_SETTINGS_MESSAGE,
+		   settings: this.state.settings
+	       })
+	       .catch(error => {
+		   console.error("Cannot save settings: ", error);
+	       });	
+    }    
+
     componentDidUpdate() {
-	browser.runtime.sendMessage({
-	    message: constants.SET_STATE_MESSAGE,
-	    password: this.state.password,
-	    settings: this.state.settings
-	});
+	browser.runtime
+	       .sendMessage({
+		   message: constants.SET_STATE_MESSAGE,
+		   password: this.state.password,
+		   settings: this.state.settings
+	       })
+	       .catch(error => {
+		   console.error("Cannot set state: ", error);
+	       });
     }
 
     componentDidMount() {
-	browser.runtime.sendMessage({message: constants.GET_STATE_MESSAGE}).then((response) => {
-	    this.setState(response);
-	});
+	browser.runtime.sendMessage({message: constants.GET_STATE_MESSAGE})
+	       .then((response) => {
+		   this.setState(response);
+	       })
+	       .catch((error) => {
+		   console.error("Cannot get state: ", error)
+	       });
     }
 
     render() {
@@ -225,11 +250,20 @@ class Popup extends React.Component {
 		    <div className="exclude count">{browser.i18n.getMessage("excludeDescription")}</div>
 		</div>
 
-		<div className="create-button">
-		    <input type="button"
-			   id="createButton"
-			   value={browser.i18n.getMessage("generatePasswordButton")}
-			   onClick={this.generatePassword} />
+		<div className="two-rows-split">
+		    <div>
+			<input type="button"
+			       id="saveSettingsButton"
+			       value={browser.i18n.getMessage("saveSettingsButton")}
+			       onClick={this.saveSettings} />
+
+		    </div>
+		    <div>
+			<input type="button"
+			       id="createButton"
+			       value={browser.i18n.getMessage("generatePasswordButton")}
+			       onClick={this.generatePassword} />
+		    </div>
 		</div>
 	    </div>
 	);

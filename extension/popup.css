@@ -62,7 +62,3 @@ label, input[type="checkbox"] {
 .character-settings > .exclude.count {
     font-size: xx-small;
 }
-
-.create-button {
-    text-align: right;
-}

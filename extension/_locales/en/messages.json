@@ -101,7 +101,11 @@
 
     "generatePasswordButton": {
 	"message": "Generate Password",
-	"description": "Label on 'Generate Password' menu button."
-    }
+	"description": "Label on 'Generate Password' button."
+    },
 
+    "saveSettingsButton": {
+	"message": "Save Settings",
+	"description": "Label on 'Save Settings' button."
+    }
 }

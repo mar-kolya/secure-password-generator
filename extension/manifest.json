@@ -14,7 +14,8 @@
 
     "permissions": [
 	"contextMenus",
-	"activeTab"
+	"activeTab",
+	"storage"
     ],
 
     "browser_action": {
