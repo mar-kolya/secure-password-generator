@@ -1,0 +1,111 @@
+{
+    "extensionName": {
+	"message": "Sicherer Passwort Generator",
+	"description": "Name of the extension."
+    },
+
+    "extensionDescription": {
+	"message": "Generiert zufällige sichere Passwörter.",
+	"description": "Description of the extension."
+    },
+
+    "menuLabelGenerate": {
+	"message": "Generiere Passwort",
+	"description": "Label on 'Generate Password' menu entry."
+    },
+
+    "menuLabelInsertPrevious": {
+	"message": "Letztes Passwort einfügen",
+	"description": "Label on 'Insert Previous Password' menu entry."
+    },
+
+    "copyToClipboardButton": {
+	"message": "In Zwischenablage kopieren",
+	"description": "Text on a 'Copy to Clipboard' button."
+    },
+
+    "hidePassword": {
+	"message": "Passwort verstecken",
+	"description": "Tooltip for 'Hide password' image."
+    },
+
+    "showPassword": {
+	"message": "Zeige Passwort",
+	"description": "Tooltip for 'Show password' image."
+    },
+
+    "passwordLength": {
+	"message": "Passwortlänge:",
+	"description": "Text for 'Password length' label."
+    },
+
+    "bothHands": {
+	"message": "Zweihändig",
+	"description": "Text for 'Both Hands' menu option."
+    },
+
+    "leftHandOnly": {
+	"message": "Nur linkshändig",
+	"description": "Text for 'Left Hand Only' menu option."
+    },
+
+    "rightHandOnly": {
+	"message": "Nur rechtshändig",
+	"description": "Text for 'Right Hand Only' menu option."
+    },
+
+    "minCharacterCount": {
+	"message": "Mindestlänge",
+	"description": "Text for 'Min count' label."
+    },
+
+    "alpha": {
+	"message": "Buchstaben (A-Z)",
+	"description": "Text for 'Letters (A-Z)' label."
+    },
+
+    "lowerCase": {
+	"message": "Kleinbuchstaben",
+	"description": "Text for 'Lower Case' menu option."
+    },
+
+    "upperCase": {
+	"message": "Großbuchstaben",
+	"description": "Text for 'Upper Case' menu option."
+    },
+
+    "mixedCase": {
+	"message": "Groß/Klein gemischt",
+	"description": "Text for 'right hand only' menu option."
+    },
+
+    "digits": {
+	"message": "Zahlen (0-9)",
+	"description": "Text for 'Digits (0-9)' label."
+    },
+
+    "other": {
+	"message": "Andere Zeichen",
+	"description": "Text for 'Other Characters' label."
+    },
+
+    "exclude": {
+	"message": "Zeichen ausschliessen",
+	"description": "Text for 'Exclude Characters' label."
+    },
+
+    "excludeDescription": {
+	"message": "(Groß-/Kleinschrift nicht beachtet)",
+	"description": "Text for '(not case sesitive)' label."
+    },
+
+    "generatePasswordButton": {
+	"message": "Passwort generieren",
+	"description": "Label on 'Generate Password' button."
+    },
+
+    "saveSettingsButton": {
+	"message": "Einstellungen speichern",
+	"description": "Label on 'Save Settings' button."
+    }
+}
