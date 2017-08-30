@@ -1,0 +1,111 @@
+{
+    "extensionName": {
+	"message": "Secure Password Generator",
+	"description": "Jméno rozšíření."
+    },
+
+    "extensionDescription": {
+	"message": "Generuje náhodnéá bezpečná hesla.",
+	"description": "Popis rozšíření."
+    },
+
+    "menuLabelGenerate": {
+	"message": "Generovat heslo.",
+	"description": "Label on 'Generate Password' menu entry."
+    },
+
+    "menuLabelInsertPrevious": {
+	"message": "Vložit předchozí heslo",
+	"description": "Label on 'Insert Previous Password' menu entry."
+    },
+
+    "copyToClipboardButton": {
+	"message": "Kopírovat do schránky",
+	"description": "Text on a 'Copy to Clipboard' button."
+    },
+
+    "hidePassword": {
+	"message": "Skrýt heslo",
+	"description": "Tooltip for 'Hide password' image."
+    },
+
+    "showPassword": {
+	"message": "Zobrazit heslo",
+	"description": "Tooltip for 'Show password' image."
+    },
+
+    "passwordLength": {
+	"message": "Délka hesla:",
+	"description": "Text for 'Password length' label."
+    },
+
+    "bothHands": {
+	"message": "Obě ruce",
+	"description": "Text for 'Both Hands' menu option."
+    },
+
+    "leftHandOnly": {
+	"message": "Pouze levá ruka",
+	"description": "Text for 'Left Hand Only' menu option."
+    },
+
+    "rightHandOnly": {
+	"message": "Pouze pravá ruka",
+	"description": "Text for 'Right Hand Only' menu option."
+    },
+
+    "minCharacterCount": {
+	"message": "Minimální počet",
+	"description": "Text for 'Min count' label."
+    },
+
+    "alpha": {
+	"message": "Písmena (A-Z)",
+	"description": "Text for 'Letters (A-Z)' label."
+    },
+
+    "lowerCase": {
+	"message": "Malá písmena",
+	"description": "Text for 'Lower Case' menu option."
+    },
+
+    "upperCase": {
+	"message": "Velká písmena",
+	"description": "Text for 'Upper Case' menu option."
+    },
+
+    "mixedCase": {
+	"message": "Malá i velká písmena",
+	"description": "Text for 'right hand only' menu option."
+    },
+
+    "digits": {
+	"message": "Čísla (0-9)",
+	"description": "Text for 'Digits (0-9)' label."
+    },
+
+    "other": {
+	"message": "Ostatní znaky",
+	"description": "Text for 'Other Characters' label."
+    },
+
+    "exclude": {
+	"message": "Vyjmuté znaky",
+	"description": "Text for 'Exclude Characters' label."
+    },
+
+    "excludeDescription": {
+	"message": "(nezáleží na velikosti)",
+	"description": "Text for '(not case sesitive)' label."
+    },
+
+    "generatePasswordButton": {
+	"message": "Generovat heslo",
+	"description": "Label on 'Generate Password' button."
+    },
+
+    "saveSettingsButton": {
+	"message": "Uložit nastavení",
+	"description": "Label on 'Save Settings' button."
+    }
+}
