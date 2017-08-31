@@ -29,6 +29,21 @@
 	"default_popup": "popup.html"
     },
 
+    "commands": {
+	"generate-password": {
+	    "suggested_key": {
+		"default": "Alt+G"
+	    },
+	    "description": "Generate Password"
+	},
+	"insert-previous-password": {
+	    "suggested_key": {
+		"default": "Alt+L"
+	    },
+	    "description": "Insert Previous Password"
+	}
+    },
+
     "background": {
 	"scripts": ["dist/init.js", "dist/background.js"]
     }

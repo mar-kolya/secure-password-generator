@@ -163,20 +163,28 @@ browser.storage.local
 	console.error("Cannot read settings: ", error);
     });
 
-browser.contextMenus.onClicked.addListener((info, tab) => {
-    switch (info.menuItemId) {
+function performAction(action) {
+    switch (action) {
     case constants.GENERATE_PASSWORD_MENU:
 	password = createPassword(settings);
     case constants.INSERT_PREVIOUS_PASSWORD_MENU:
 	browser.tabs
 	    .executeScript({
-		code: "document.activeElement.value = " + JSON.stringify(password)
+		code: "if(document.activeElement.type === \"password\") { document.activeElement.value = " + JSON.stringify(password) + " }"
 	    })
 	    .catch((error) => {
 		console.error("Failed to set password: ", error);
 	    });
 	break;
     }
+}
+
+browser.contextMenus.onClicked.addListener((info, tab) => {
+    performAction(info.menuItemId);
+});
+
+browser.commands.onCommand.addListener(function(command) {
+    performAction(command);
 });
 
 browser.runtime.onMessage.addListener((message, sender) => {
