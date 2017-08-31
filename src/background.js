@@ -136,19 +136,19 @@ function createPassword(settings) {
     return password;
 }
 
-const MENU_CONTEXT = "PASSWORD" in browser.contextMenus.ContextType
-      ? browser.contextMenus.ContextType.PASSWORD : browser.contextMenus.ContextType.EDITABLE;
+const MENU_CONTEXTS = "PASSWORD" in browser.contextMenus.ContextType
+      ? [browser.contextMenus.ContextType.PASSWORD, browser.contextMenus.ContextType.EDITABLE] : [browser.contextMenus.ContextType.EDITABLE];
 
 browser.contextMenus.create({
     id: constants.GENERATE_PASSWORD_MENU,
     title: browser.i18n.getMessage("menuLabelGenerate"),
-    contexts: [MENU_CONTEXT]
+    contexts: MENU_CONTEXTS
 });
 
 browser.contextMenus.create({
     id: constants.INSERT_PREVIOUS_PASSWORD_MENU,
     title: browser.i18n.getMessage("menuLabelInsertPrevious"),
-    contexts: [MENU_CONTEXT]
+    contexts: MENU_CONTEXTS
 });
 
 var password = "";
@@ -170,7 +170,7 @@ function performAction(action) {
     case constants.INSERT_PREVIOUS_PASSWORD_MENU:
 	browser.tabs
 	    .executeScript({
-		code: "if(document.activeElement.type === \"password\") { document.activeElement.value = " + JSON.stringify(password) + " }"
+		code: "document.activeElement.value = " + JSON.stringify(password)
 	    })
 	    .catch((error) => {
 		console.error("Failed to set password: ", error);
