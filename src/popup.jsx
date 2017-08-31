@@ -61,6 +61,19 @@ class Popup extends React.Component {
 	       });
     }
 
+    insertPassword(event) {
+	browser.runtime
+	       .sendMessage({message: constants.INSERT_PASSWORD_MESSAGE})
+	       .then((response) => {
+		   window.close();
+	       })
+	       .catch(error => {
+		   console.error("Cannot insert password: ", error);
+		   // Somehow we hit this in Chrome eventhough we insert password just fine
+		   window.close();
+	       });
+    }
+
     saveSettings(event) {
 	browser.runtime
 	       .sendMessage({
@@ -97,7 +110,7 @@ class Popup extends React.Component {
     render() {
 	return (
 	    <div>
-		<div className="two-rows-split">
+		<div className="space-justified">
 		    <div>
 			<input
 			    type={this.state.settings.hide ? "password" : "text"}
@@ -129,7 +142,7 @@ class Popup extends React.Component {
 		</div>
 
 		<div className="character-settings">
-		    <div className="password-length-and-hands two-rows-split">
+		    <div className="password-length-and-hands space-justified">
 			<div>
 			    {browser.i18n.getMessage("passwordLength")} <input
 									    type="number"
@@ -250,7 +263,7 @@ class Popup extends React.Component {
 		    <div className="exclude count">{browser.i18n.getMessage("excludeDescription")}</div>
 		</div>
 
-		<div className="two-rows-split">
+		<div className="space-justified">
 		    <div>
 			<input type="button"
 			       id="saveSettingsButton"
@@ -260,9 +273,15 @@ class Popup extends React.Component {
 		    </div>
 		    <div>
 			<input type="button"
-			       id="createButton"
+			       id="generateButton"
 			       value={browser.i18n.getMessage("generatePasswordButton")}
 			       onClick={this.generatePassword} />
+		    </div>
+		    <div>
+			<input type="button"
+			       id="insertAndCloseButton"
+			       value={browser.i18n.getMessage("insertAndCloseButton")}
+			       onClick={this.insertPassword} />
 		    </div>
 		</div>
 	    </div>

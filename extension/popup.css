@@ -2,7 +2,7 @@
     white-space: nowrap; /* To fix Chrome page size */
 }
 
-.two-rows-split {
+.space-justified {
     /* We do this hack to avoid doing 'float: right' which is broken in FF: https://bugzilla.mozilla.org/show_bug.cgi?id=488725 */
     display: flex;
     justify-content: space-between;

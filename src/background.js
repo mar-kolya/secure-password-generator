@@ -151,6 +151,17 @@ browser.contextMenus.create({
     contexts: MENU_CONTEXTS
 });
 
+try {
+    browser.contextMenus.create({
+	id: constants.OPEN_POPUP_MENU,
+	title: browser.i18n.getMessage("menuLabelOpenPopup"),
+	contexts: MENU_CONTEXTS,
+	command: "_execute_browser_action"
+    });
+} catch(error) {
+    console.info("Cannot install open_popup menu item, probably running on chrome: ", error);
+}
+
 var password = "";
 var settings = JSON.parse(JSON.stringify(constants.DEFAULT_SETTINGS));
 
@@ -195,6 +206,9 @@ browser.runtime.onMessage.addListener((message, sender) => {
 	response = Promise.resolve({
 	    password: password
 	});
+	break;
+    case constants.INSERT_PASSWORD_MESSAGE:
+	performAction(constants.INSERT_PREVIOUS_PASSWORD_MENU);
 	break;
     case constants.GET_STATE_MESSAGE:
 	response = Promise.resolve({

@@ -19,6 +19,11 @@
 	"description": "Label on 'Insert Previous Password' menu entry."
     },
 
+    "menuLabelOpenPopup": {
+	"message": "Настройки",
+	"description": "Label on 'Settings' menu entry."
+    },
+
     "copyToClipboardButton": {
 	"message": "Скопировать в буфер обмена",
 	"description": "Text on a 'Copy to Clipboard' button."
@@ -102,6 +107,11 @@
     "generatePasswordButton": {
 	"message": "Создать пароль",
 	"description": "Label on 'Generate Password' button."
+    },
+
+    "insertAndCloseButton": {
+	"message": "Использовать пароль",
+	"description": "Label on 'Use Password' button."
     },
 
     "saveSettingsButton": {
