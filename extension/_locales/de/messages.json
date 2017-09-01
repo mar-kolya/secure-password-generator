@@ -19,6 +19,11 @@
 	"description": "Label on 'Insert Previous Password' menu entry."
     },
 
+    "menuLabelOpenPopup": {
+	"message": "Einstellungen",
+	"description": "Label on 'Settings' menu entry."
+    },
+
     "copyToClipboardButton": {
 	"message": "In Zwischenablage kopieren",
 	"description": "Text on a 'Copy to Clipboard' button."
@@ -102,6 +107,11 @@
     "generatePasswordButton": {
 	"message": "Passwort generieren",
 	"description": "Label on 'Generate Password' button."
+    },
+
+    "insertAndCloseButton": {
+	"message": "Password einfügen",
+	"description": "Label on 'Use Password' button."
     },
 
     "saveSettingsButton": {
