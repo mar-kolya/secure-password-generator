@@ -21,6 +21,12 @@ npm run start
 This will start up the process and reload add-on automtically when
 file change.
 
+## Update dependencies
+Before releasing new version do
+```
+npm shrinkwrap --dev
+```
+
 ## Packaging
 ```
 npm run package
