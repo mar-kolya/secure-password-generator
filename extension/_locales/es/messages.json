@@ -1,0 +1,121 @@
+{
+    "extensionName": {
+	"message": "Secure Password Generator",
+	"description": "Name of the extension."
+    },
+
+    "extensionDescription": {
+	"message": "Genera contraseñas seguras aleatorias.",
+	"description": "Description of the extension."
+    },
+
+    "menuLabelGenerate": {
+	"message": "Generar Contraseña",
+	"description": "Label on 'Generate Password' menu entry."
+    },
+
+    "menuLabelInsertPrevious": {
+	"message": "Insertar Contraseña Previa",
+	"description": "Label on 'Insert Previous Password' menu entry."
+    },
+
+    "menuLabelOpenPopup": {
+	"message": "Opciones",
+	"description": "Label on 'Settings' menu entry."
+    },
+
+    "copyToClipboardButton": {
+	"message": "Copiar al Portapapeles",
+	"description": "Text on a 'Copy to Clipboard' button."
+    },
+
+    "hidePassword": {
+	"message": "Ocultar contraseña",
+	"description": "Tooltip for 'Hide password' image."
+    },
+
+    "showPassword": {
+	"message": "Mostrar contraseña",
+	"description": "Tooltip for 'Show password' image."
+    },
+
+    "passwordLength": {
+	"message": "Longitud de contraseña:",
+	"description": "Text for 'Password length' label."
+    },
+
+    "bothHands": {
+	"message": "Ambas Manos",
+	"description": "Text for 'Both Hands' menu option."
+    },
+
+    "leftHandOnly": {
+	"message": "Solo Mano Izquierda",
+	"description": "Text for 'Left Hand Only' menu option."
+    },
+
+    "rightHandOnly": {
+	"message": "Solo Mano Derecha",
+	"description": "Text for 'Right Hand Only' menu option."
+    },
+
+    "minCharacterCount": {
+	"message": "Mínimo",
+	"description": "Text for 'Min count' label."
+    },
+
+    "alpha": {
+	"message": "Letras (A-Z)",
+	"description": "Text for 'Letters (A-Z)' label."
+    },
+
+    "lowerCase": {
+	"message": "Minúscula",
+	"description": "Text for 'Lower Case' menu option."
+    },
+
+    "upperCase": {
+	"message": "Mayúscula",
+	"description": "Text for 'Upper Case' menu option."
+    },
+
+    "mixedCase": {
+	"message": "Mayúsculas y minúsculas",
+	"description": "Text for 'Mixed Case' menu option."
+    },
+
+    "digits": {
+	"message": "Dígitos (0-9)",
+	"description": "Text for 'Digits (0-9)' label."
+    },
+
+    "other": {
+	"message": "Otros Caracteres",
+	"description": "Text for 'Other Characters' label."
+    },
+
+    "exclude": {
+	"message": "Caracteres Excluídos",
+	"description": "Text for 'Exclude Characters' label."
+    },
+
+    "excludeDescription": {
+	"message": "(sin sensibilidad a mayúsculas y minúsculas)",
+	"description": "Text for '(not case sesitive)' label."
+    },
+
+    "generatePasswordButton": {
+	"message": "Generar Contraseña",
+	"description": "Label on 'Generate Password' button."
+    },
+
+    "insertAndCloseButton": {
+	"message": "Usar Contraseña",
+	"description": "Label on 'Use Password' button."
+    },
+
+    "saveSettingsButton": {
+	"message": "Guardar Opciones",
+	"description": "Label on 'Save Settings' button."
+    }
+}
