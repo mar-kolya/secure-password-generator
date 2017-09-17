@@ -76,7 +76,7 @@
 
     "mixedCase": {
 	"message": "Malá i velká písmena",
-	"description": "Text for 'right hand only' menu option."
+	"description": "Text for 'Mixed Case' menu option."
     },
 
     "digits": {

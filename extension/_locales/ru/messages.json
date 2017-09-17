@@ -81,7 +81,7 @@
 
     "mixedCase": {
 	"message": "Смешанный регистр",
-	"description": "Text for 'right hand only' menu option."
+	"description": "Text for 'Mixed Case' menu option."
     },
 
     "digits": {
