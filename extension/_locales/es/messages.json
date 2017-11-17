@@ -1,121 +1,121 @@
 {
     "extensionName": {
-	"message": "Sicherer Passwort Generator",
+	"message": "Secure Password Generator",
 	"description": "Name of the extension."
     },
 
     "extensionDescription": {
-	"message": "Generiert zufällige sichere Passwörter.",
+	"message": "Genera contraseñas seguras aleatorias.",
 	"description": "Description of the extension."
     },
 
     "menuLabelGenerate": {
-	"message": "Generiere Passwort",
+	"message": "Generar Contraseña",
 	"description": "Label on 'Generate Password' menu entry."
     },
 
     "menuLabelInsertPrevious": {
-	"message": "Letztes Passwort einfügen",
+	"message": "Insertar Contraseña Previa",
 	"description": "Label on 'Insert Previous Password' menu entry."
     },
 
     "menuLabelOpenPopup": {
-	"message": "Einstellungen",
+	"message": "Opciones",
 	"description": "Label on 'Settings' menu entry."
     },
 
     "copyToClipboardButton": {
-	"message": "In Zwischenablage kopieren",
+	"message": "Copiar al Portapapeles",
 	"description": "Text on a 'Copy to Clipboard' button."
     },
 
     "hidePassword": {
-	"message": "Passwort verstecken",
+	"message": "Ocultar contraseña",
 	"description": "Tooltip for 'Hide password' image."
     },
 
     "showPassword": {
-	"message": "Zeige Passwort",
+	"message": "Mostrar contraseña",
 	"description": "Tooltip for 'Show password' image."
     },
 
     "passwordLength": {
-	"message": "Passwortlänge:",
+	"message": "Longitud de contraseña:",
 	"description": "Text for 'Password length' label."
     },
 
     "bothHands": {
-	"message": "Zweihändig",
+	"message": "Ambas Manos",
 	"description": "Text for 'Both Hands' menu option."
     },
 
     "leftHandOnly": {
-	"message": "Nur linkshändig",
+	"message": "Solo Mano Izquierda",
 	"description": "Text for 'Left Hand Only' menu option."
     },
 
     "rightHandOnly": {
-	"message": "Nur rechtshändig",
+	"message": "Solo Mano Derecha",
 	"description": "Text for 'Right Hand Only' menu option."
     },
 
     "minCharacterCount": {
-	"message": "Mindestlänge",
+	"message": "Mínimo",
 	"description": "Text for 'Min count' label."
     },
 
     "alpha": {
-	"message": "Buchstaben (A-Z)",
+	"message": "Letras (A-Z)",
 	"description": "Text for 'Letters (A-Z)' label."
     },
 
     "lowerCase": {
-	"message": "Kleinbuchstaben",
+	"message": "Minúscula",
 	"description": "Text for 'Lower Case' menu option."
     },
 
     "upperCase": {
-	"message": "Großbuchstaben",
+	"message": "Mayúscula",
 	"description": "Text for 'Upper Case' menu option."
     },
 
     "mixedCase": {
-	"message": "Groß/Klein gemischt",
+	"message": "Mayúsculas y minúsculas",
 	"description": "Text for 'Mixed Case' menu option."
     },
 
     "digits": {
-	"message": "Zahlen (0-9)",
+	"message": "Dígitos (0-9)",
 	"description": "Text for 'Digits (0-9)' label."
     },
 
     "other": {
-	"message": "Andere Zeichen",
+	"message": "Otros Caracteres",
 	"description": "Text for 'Other Characters' label."
     },
 
     "exclude": {
-	"message": "Zeichen ausschliessen",
+	"message": "Caracteres Excluídos",
 	"description": "Text for 'Exclude Characters' label."
     },
 
     "excludeDescription": {
-	"message": "(Groß-/Kleinschrift nicht beachtet)",
+	"message": "(sin sensibilidad a mayúsculas y minúsculas)",
 	"description": "Text for '(not case sesitive)' label."
     },
 
     "generatePasswordButton": {
-	"message": "Passwort generieren",
+	"message": "Generar Contraseña",
 	"description": "Label on 'Generate Password' button."
     },
 
     "insertAndCloseButton": {
-	"message": "Password einfügen",
+	"message": "Usar Contraseña",
 	"description": "Label on 'Use Password' button."
     },
 
     "saveSettingsButton": {
-	"message": "Einstellungen speichern",
+	"message": "Guardar Opciones",
 	"description": "Label on 'Save Settings' button."
     }
 }
