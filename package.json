@@ -1,6 +1,6 @@
 {
   "name": "secure-password-generator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Firefox webExtention that generates random secure passwords",
   "author": "Nikolay Martynov <mar.kolya@gmail.com>",
   "homepage": "https://github.com/mar-kolya/secure-password-generator",
