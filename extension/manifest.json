@@ -26,7 +26,16 @@
 	    "64": "icons/password-64.png"
 	},
 	"default_title": "Secure Password Generator",
-	"default_popup": "popup.html"
+	"default_popup": "popup.html",
+	"theme_icons": [{
+	    "light": "icons/password-16-light.png",
+	    "dark": "icons/password-16.png",
+	    "size": 16
+	}, {
+	    "light": "icons/password-32-light.png",
+	    "dark": "icons/password-32.png",
+	    "size": 32
+	}]
     },
 
     "commands": {
