@@ -181,7 +181,8 @@ function performAction(action) {
     case constants.INSERT_PREVIOUS_PASSWORD_MENU:
 	browser.tabs
 	    .executeScript({
-		code: "document.activeElement.value = " + JSON.stringify(password)
+		code: "document.activeElement.value = " + JSON.stringify(password) + 
+		"; ['keyup','keypress','keydown','paste','change'].forEach((event) => document.activeElement.dispatchEvent(new Event(event)))"
 	    })
 	    .catch((error) => {
 		console.error("Failed to set password: ", error);
