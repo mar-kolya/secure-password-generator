@@ -1,10 +1,10 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "__MSG_extensionName__",
     "description": "__MSG_extensionDescription__",
-    "version": "1.0.9",
+    "version": "1.0.11",
     "default_locale": "en",
-    "homepage_url": "https://addons.mozilla.org/firefox/addon/secure-password-generator/",
+    "homepage_url": "https://github.com/mar-kolya/secure-password-generator",
     "icons": {
 	"16": "icons/password-16.png",
 	"32": "icons/password-32.png",
@@ -15,11 +15,11 @@
     "permissions": [
 	"contextMenus",
 	"activeTab",
+	"scripting",
 	"storage"
     ],
 
-    "browser_action": {
-	"browser_style": true,
+    "action": {
 	"default_icon": {
 	    "16": "icons/password-16.png",
 	    "32": "icons/password-32.png",
@@ -27,16 +27,7 @@
 	    "64": "icons/password-64.png"
 	},
 	"default_title": "Secure Password Generator",
-	"default_popup": "popup.html",
-	"theme_icons": [{
-	    "light": "icons/password-16-light.png",
-	    "dark": "icons/password-16.png",
-	    "size": 16
-	}, {
-	    "light": "icons/password-32-light.png",
-	    "dark": "icons/password-32.png",
-	    "size": 32
-	}]
+	"default_popup": "popup.html"
     },
 
     "commands": {
@@ -55,6 +46,16 @@
     },
 
     "background": {
-	"scripts": ["dist/init.js", "dist/background.js"]
+	"scripts": ["dist/background.js"],
+	"service_worker": "dist/background.js"
+    },
+
+    "browser_specific_settings": {
+	"gecko": {
+	    "id": "password.generator@kolya.ca",
+	    "data_collection_permissions": {
+		"required": ["none"]
+	    }
+	}
     }
 }

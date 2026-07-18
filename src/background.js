@@ -64,7 +64,7 @@ function getOther(settings) {
 
 function randomInt(max) {
     let randomArray = new Uint16Array(1);
-    window.crypto.getRandomValues(randomArray);
+    crypto.getRandomValues(randomArray);
     return randomArray[0] % max;
 }
 
@@ -139,59 +139,183 @@ function createPassword(settings) {
 const MENU_CONTEXTS = "PASSWORD" in browser.contextMenus.ContextType
       ? [browser.contextMenus.ContextType.PASSWORD, browser.contextMenus.ContextType.EDITABLE] : [browser.contextMenus.ContextType.EDITABLE];
 
-browser.contextMenus.create({
-    id: constants.GENERATE_PASSWORD_MENU,
-    title: browser.i18n.getMessage("menuLabelGenerate"),
-    contexts: MENU_CONTEXTS
-});
-
-browser.contextMenus.create({
-    id: constants.INSERT_PREVIOUS_PASSWORD_MENU,
-    title: browser.i18n.getMessage("menuLabelInsertPrevious"),
-    contexts: MENU_CONTEXTS
-});
-
-try {
-    browser.contextMenus.create({
-	id: constants.OPEN_POPUP_MENU,
-	title: browser.i18n.getMessage("menuLabelOpenPopup"),
-	contexts: MENU_CONTEXTS,
-	command: "_execute_browser_action"
-    });
-} catch(error) {
-    console.info("Cannot install open_popup menu item, probably running on chrome: ", error);
-}
-
 var password = "";
 var settings = JSON.parse(JSON.stringify(constants.DEFAULT_SETTINGS));
 
-browser.storage.local
+const SESSION_STATE_KEY = "state";
+
+function createContextMenus() {
+    browser.contextMenus.removeAll().then(() => {
+	browser.contextMenus.create({
+	    id: constants.GENERATE_PASSWORD_MENU,
+	    title: browser.i18n.getMessage("menuLabelGenerate"),
+	    contexts: MENU_CONTEXTS
+	});
+
+	browser.contextMenus.create({
+	    id: constants.INSERT_PREVIOUS_PASSWORD_MENU,
+	    title: browser.i18n.getMessage("menuLabelInsertPrevious"),
+	    contexts: MENU_CONTEXTS
+	});
+
+	browser.contextMenus.create({
+	    id: constants.OPEN_POPUP_MENU,
+	    title: browser.i18n.getMessage("menuLabelOpenPopup"),
+	    contexts: MENU_CONTEXTS
+	});
+    }).catch(error => {
+	console.error("Cannot install context menu items: ", error);
+    });
+}
+
+function hasSessionStorage() {
+    return typeof chrome !== "undefined" && chrome.storage && chrome.storage.session;
+}
+
+function getSessionState() {
+    if (!hasSessionStorage()) {
+	return Promise.resolve({});
+    }
+
+    return new Promise((resolve, reject) => {
+	chrome.storage.session.get({ [SESSION_STATE_KEY]: {} }, value => {
+	    let error = chrome.runtime.lastError;
+	    if (error) {
+		reject(error);
+	    } else {
+		resolve(value[SESSION_STATE_KEY]);
+	    }
+	});
+    });
+}
+
+function setSessionState() {
+    if (!hasSessionStorage()) {
+	return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+	chrome.storage.session.set({
+	    [SESSION_STATE_KEY]: {
+		password: password,
+		settings: settings
+	    }
+	}, () => {
+	    let error = chrome.runtime.lastError;
+	    if (error) {
+		reject(error);
+	    } else {
+		resolve();
+	    }
+	});
+    });
+}
+
+let initState = browser.storage.local
     .get({ [constants.SETTINGS_KEY]: settings })
     .then(value => {
 	settings = value[constants.SETTINGS_KEY];
+	return getSessionState();
+    })
+    .then(value => {
+	password = value.password || password;
+	settings = value.settings || settings;
     })
     .catch(error => {
-	console.error("Cannot read settings: ", error);
+	console.error("Cannot read saved state: ", error);
     });
 
-function performAction(action) {
+browser.runtime.onInstalled.addListener(createContextMenus);
+
+function getActiveTab() {
+    return browser.tabs.query({
+	active: true,
+	currentWindow: true
+    }).then(tabs => tabs[0]);
+}
+
+function getTargetTabId(tab) {
+    if (tab && tab.id) {
+	return Promise.resolve(tab.id);
+    }
+
+    return getActiveTab().then(activeTab => activeTab && activeTab.id);
+}
+
+function insertPassword(tab) {
+    return getTargetTabId(tab).then(tabId => {
+	if (!tabId) {
+	    return Promise.reject(new Error("Cannot find active tab"));
+	}
+
+	return new Promise((resolve, reject) => {
+	    chrome.scripting.executeScript({
+		target: {
+		    tabId: tabId
+		},
+		func: value => {
+		    let element = document.activeElement;
+		    if (element && "value" in element) {
+			element.value = value;
+			element.dispatchEvent(new Event("input", { bubbles: true }));
+			element.dispatchEvent(new Event("change", { bubbles: true }));
+		    }
+		},
+		args: [password]
+	    }, () => {
+		let error = chrome.runtime.lastError;
+		if (error) {
+		    reject(error);
+		} else {
+		    resolve();
+		}
+	    });
+	});
+    });
+}
+
+function openPopup() {
+    if (chrome.action && chrome.action.openPopup) {
+	return new Promise((resolve, reject) => {
+	    chrome.action.openPopup(() => {
+		let error = chrome.runtime.lastError;
+		if (error) {
+		    reject(error);
+		} else {
+		    resolve();
+		}
+	    });
+	});
+    }
+
+    return Promise.resolve();
+}
+
+function performAction(action, tab) {
+    return initState.then(() => {
+	let result = Promise.resolve();
+
     switch (action) {
     case constants.GENERATE_PASSWORD_MENU:
 	password = createPassword(settings);
+	result = setSessionState();
+	/* falls through */
     case constants.INSERT_PREVIOUS_PASSWORD_MENU:
-	browser.tabs
-	    .executeScript({
-		code: "document.activeElement.value = " + JSON.stringify(password)
-	    })
-	    .catch((error) => {
-		console.error("Failed to set password: ", error);
-	    });
+	result = result.then(() => insertPassword(tab));
+	break;
+    case constants.OPEN_POPUP_MENU:
+	result = openPopup();
 	break;
     }
+
+	return result.catch((error) => {
+	    console.error("Failed to perform action: ", error);
+	});
+    });
 }
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
-    performAction(info.menuItemId);
+    performAction(info.menuItemId, tab);
 });
 
 browser.commands.onCommand.addListener(function(command) {
@@ -202,27 +326,36 @@ browser.runtime.onMessage.addListener((message, sender) => {
     let response = undefined;
     switch (message.message) {
     case constants.GENERATE_PASSWORD_MESSAGE:
-	password = createPassword(settings);
-	response = Promise.resolve({
-	    password: password
+	response = initState.then(() => {
+	    password = createPassword(settings);
+	    return setSessionState();
+	}).then(() => {
+	    return {
+		password: password
+	    };
 	});
 	break;
     case constants.INSERT_PASSWORD_MESSAGE:
-	performAction(constants.INSERT_PREVIOUS_PASSWORD_MENU);
+	response = performAction(constants.INSERT_PREVIOUS_PASSWORD_MENU);
 	break;
     case constants.GET_STATE_MESSAGE:
-	response = Promise.resolve({
-	    password: password,
-	    settings: settings
+	response = initState.then(() => {
+	    return {
+		password: password,
+		settings: settings
+	    };
 	});
 	break;
     case constants.SET_STATE_MESSAGE:
 	settings = message.settings;
 	password = message.password;
+	response = setSessionState();
 	break;
     case constants.SAVE_SETTINGS_MESSAGE:
 	settings = message.settings;
-	response = browser.storage.local.set({ [constants.SETTINGS_KEY]: settings });
+	response = browser.storage.local
+			  .set({ [constants.SETTINGS_KEY]: settings })
+			  .then(setSessionState);
 	break;
     }
     return response;

@@ -1,11 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = {
-    entry: {
-	popup: './src/popup.jsx',
-	background: './src/background.js'
-    },
+const commonConfig = {
     output: {
 	path: 'extension/dist',
 	filename: '[name].js'
@@ -30,8 +26,23 @@ module.exports = {
     plugins: [
 	new webpack.DefinePlugin({
 	    'process.env.NODE_ENV': JSON.stringify('production')
-	}),
-	new webpack.optimize.CommonsChunkPlugin("init.js")
+	})
     ],
     devtool: 'sourcemap'
 };
+
+module.exports = [
+    Object.assign({}, commonConfig, {
+	entry: {
+	    popup: './src/popup.jsx'
+	},
+	plugins: commonConfig.plugins.concat([
+	    new webpack.optimize.CommonsChunkPlugin("init.js")
+	])
+    }),
+    Object.assign({}, commonConfig, {
+	entry: {
+	    background: './src/background.js'
+	}
+    })
+];
